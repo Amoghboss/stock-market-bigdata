@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: stock-market-bigdata
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python run.py generate && python run.py preprocess && python run.py mapreduce-local && python run.py analytics
+    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 3 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: FLASK_DEBUG
+        value: "false"
+      - key: SECRET_KEY
+        generateValue: true

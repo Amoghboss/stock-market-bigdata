@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  mapred-site.xml — Stock Market Big Data Project
+  MapReduce on YARN, pseudo-distributed WSL2 Ubuntu
+-->
+<configuration>
+
+    <!-- ===== Framework ===== -->
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+        <description>Execute MapReduce jobs via YARN.</description>
+    </property>
+
+    <!-- ===== Application Classpath ===== -->
+    <property>
+        <name>mapreduce.application.classpath</name>
+        <value>
+            $HADOOP_HOME/share/hadoop/mapreduce/*,
+            $HADOOP_HOME/share/hadoop/mapreduce/lib/*,
+            $HADOOP_HOME/share/hadoop/common/*,
+            $HADOOP_HOME/share/hadoop/common/lib/*,
+            $HADOOP_HOME/share/hadoop/hdfs/*,
+            $HADOOP_HOME/share/hadoop/hdfs/lib/*,
+            $HADOOP_HOME/share/hadoop/yarn/*,
+            $HADOOP_HOME/share/hadoop/yarn/lib/*
+        </value>
+    </property>
+
+    <!-- ===== Job History Server ===== -->
+    <property>
+        <name>mapreduce.jobhistory.address</name>
+        <value>localhost:10020</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.address</name>
+        <value>localhost:19888</value>
+    </property>
+
+    <!-- ===== Map / Reduce Memory ===== -->
+    <property>
+        <name>mapreduce.map.memory.mb</name>
+        <value>1024</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.memory.mb</name>
+        <value>2048</value>
+    </property>
+    <property>
+        <name>mapreduce.map.java.opts</name>
+        <value>-Xmx820m</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.java.opts</name>
+        <value>-Xmx1638m</value>
+    </property>
+
+    <!-- ===== Streaming ===== -->
+    <property>
+        <name>mapreduce.admin.user.env</name>
+        <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
+    </property>
+
+    <!-- ===== Speculative Execution (disable for deterministic jobs) ===== -->
+    <property>
+        <name>mapreduce.map.speculative</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.speculative</name>
+        <value>false</value>
+    </property>
+
+</configuration>

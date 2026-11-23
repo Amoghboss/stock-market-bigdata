@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  yarn-site.xml — Stock Market Big Data Project
+  YARN on single-node pseudo-distributed WSL2 Ubuntu
+-->
+<configuration>
+
+    <!-- ===== Auxiliary Services ===== -->
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+        <description>Shuffle service required for MapReduce.</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    </property>
+
+    <!-- ===== ResourceManager ===== -->
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>localhost</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>localhost:8032</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>localhost:8088</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.scheduler.address</name>
+        <value>localhost:8030</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.resource-tracker.address</name>
+        <value>localhost:8031</value>
+    </property>
+
+    <!-- ===== NodeManager Memory ===== -->
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>4096</value>
+        <description>Total memory available to containers (4 GB for WSL2).</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>4</value>
+        <description>Virtual cores available to YARN.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>512</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>4096</value>
+    </property>
+
+    <!-- ===== VMem Check (disable — WSL2 cgroup quirks) ===== -->
+    <property>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>false</value>
+        <description>
+            Virtual-memory enforcement is unreliable in WSL2;
+            disable to prevent spurious container kills.
+        </description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.pmem-check-enabled</name>
+        <value>false</value>
+    </property>
+
+    <!-- ===== Log Aggregation ===== -->
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>yarn.log-aggregation.retain-seconds</name>
+        <value>604800</value>
+        <description>Retain aggregated logs for 7 days.</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.log-dirs</name>
+        <value>/home/${user.name}/hadoop_data/yarn/logs</value>
+    </property>
+
+    <!-- ===== NodeManager Classpath ===== -->
+    <property>
+        <name>yarn.application.classpath</name>
+        <value>
+            $HADOOP_HOME/etc/hadoop,
+            $HADOOP_HOME/share/hadoop/common/*,
+            $HADOOP_HOME/share/hadoop/common/lib/*,
+            $HADOOP_HOME/share/hadoop/hdfs/*,
+            $HADOOP_HOME/share/hadoop/hdfs/lib/*,
+            $HADOOP_HOME/share/hadoop/mapreduce/*,
+            $HADOOP_HOME/share/hadoop/mapreduce/lib/*,
+            $HADOOP_HOME/share/hadoop/yarn/*,
+            $HADOOP_HOME/share/hadoop/yarn/lib/*
+        </value>
+    </property>
+
+</configuration>

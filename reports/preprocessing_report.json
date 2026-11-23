@@ -1,0 +1,287 @@
+{
+  "records_before": 19614,
+  "records_after": 19575,
+  "missing_values_found": {
+    "Open": 25,
+    "Low": 33,
+    "Close": 21,
+    "Volume": 19
+  },
+  "total_missing_values": 98,
+  "missing_values_filled": 98,
+  "duplicates_removed": 39,
+  "invalid_prices": 31,
+  "invalid_price_details": [
+    {
+      "index": 1136,
+      "reasons": [
+        "High (4630.88) < Open (4730.71)"
+      ]
+    },
+    {
+      "index": 2005,
+      "reasons": [
+        "Close <= 0 (0.0)",
+        "Low (3936.89) > Close (0.0)"
+      ]
+    },
+    {
+      "index": 2209,
+      "reasons": [
+        "High (3744.7) < Open (3772.01)"
+      ]
+    },
+    {
+      "index": 3108,
+      "reasons": [
+        "Low (2074.12) > Close (2049.52)"
+      ]
+    },
+    {
+      "index": 3317,
+      "reasons": [
+        "Low (2127.74) > Open (2111.03)"
+      ]
+    },
+    {
+      "index": 4040,
+      "reasons": [
+        "High (1429.19) < Low (1479.19)",
+        "High (1429.19) < Open (1496.26)",
+        "High (1429.19) < Close (1489.45)"
+      ]
+    },
+    {
+      "index": 4489,
+      "reasons": [
+        "Low (2516.25) > Open (2494.14)"
+      ]
+    },
+    {
+      "index": 5023,
+      "reasons": [
+        "Low (4815.5) > Close (4756.55)"
+      ]
+    },
+    {
+      "index": 5729,
+      "reasons": [
+        "Low (1074.82) > Open (1044.06)"
+      ]
+    },
+    {
+      "index": 6733,
+      "reasons": [
+        "Low (3068.45) > Close (3061.5)"
+      ]
+    },
+    {
+      "index": 7018,
+      "reasons": [
+        "Low (3154.29) > Close (3153.03)"
+      ]
+    },
+    {
+      "index": 7318,
+      "reasons": [
+        "High (2849.89) < Low (2899.89)",
+        "High (2849.89) < Open (2944.29)",
+        "High (2849.89) < Close (2915.53)"
+      ]
+    },
+    {
+      "index": 8198,
+      "reasons": [
+        "Close <= 0 (0.0)",
+        "Low (215.63) > Close (0.0)"
+      ]
+    },
+    {
+      "index": 8735,
+      "reasons": [
+        "High (88.38999999999999) < Low (138.39)",
+        "High (88.38999999999999) < Open (142.76)",
+        "High (88.38999999999999) < Close (138.5)"
+      ]
+    },
+    {
+      "index": 9119,
+      "reasons": [
+        "High (139.39) < Low (189.39)",
+        "High (139.39) < Open (190.36)",
+        "High (139.39) < Close (193.4)"
+      ]
+    },
+    {
+      "index": 9151,
+      "reasons": [
+        "Low (405.79) > Open (401.37)"
+      ]
+    },
+    {
+      "index": 10791,
+      "reasons": [
+        "High (1108.71) < Open (1108.77)"
+      ]
+    },
+    {
+      "index": 10886,
+      "reasons": [
+        "High (1288.83) < Close (1290.21)"
+      ]
+    },
+    {
+      "index": 12492,
+      "reasons": [
+        "Low (2585.5) > Open (2550.01)"
+      ]
+    },
+    {
+      "index": 12798,
+      "reasons": [
+        "Low (2424.69) > Open (2412.63)"
+      ]
+    },
+    {
+      "index": 12965,
+      "reasons": [
+        "High (2211.97) < Low (2261.97)",
+        "High (2211.97) < Open (2286.52)",
+        "High (2211.97) < Close (2263.28)"
+      ]
+    },
+    {
+      "index": 14054,
+      "reasons": [
+        "Low (3948.99) > Close (3901.61)"
+      ]
+    },
+    {
+      "index": 14644,
+      "reasons": [
+        "Low (775.56) > Close (774.33)"
+      ]
+    },
+    {
+      "index": 15926,
+      "reasons": [
+        "Low (4585.17) > Open (4524.29)"
+      ]
+    },
+    {
+      "index": 15989,
+      "reasons": [
+        "Low (5884.48) > Open (5873.83)"
+      ]
+    },
+    {
+      "index": 16118,
+      "reasons": [
+        "High (6791.41) < Open (6923.59)"
+      ]
+    },
+    {
+      "index": 16205,
+      "reasons": [
+        "Low (6987.48) > Close (6899.48)"
+      ]
+    },
+    {
+      "index": 17387,
+      "reasons": [
+        "Low (9829.39) > Close (9821.09)"
+      ]
+    },
+    {
+      "index": 17456,
+      "reasons": [
+        "Low (8135.54) > Close (8073.66)"
+      ]
+    },
+    {
+      "index": 17816,
+      "reasons": [
+        "High (6547.21) < Low (6597.21)",
+        "High (6547.21) < Open (6762.55)",
+        "High (6547.21) < Close (6627.4)"
+      ]
+    },
+    {
+      "index": 18837,
+      "reasons": [
+        "Close <= 0 (0.0)",
+        "Low (449.73) > Close (0.0)"
+      ]
+    }
+  ],
+  "invalid_volumes": 10,
+  "invalid_volume_details": [
+    {
+      "index": 102,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 3136,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 5539,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 6466,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 6844,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 7579,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 14341,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 14557,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 14594,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    },
+    {
+      "index": 17704,
+      "reasons": [
+        "Volume is negative (-100000)"
+      ]
+    }
+  ],
+  "outliers_found": {
+    "Open": 682,
+    "High": 706,
+    "Low": 664,
+    "Close": 683
+  },
+  "total_outliers": 2735
+}

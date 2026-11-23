@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  stock-analytics:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stock_bigdata_analytics
+    ports:
+      - "3000:3000"
+    environment:
+      - FLASK_DEBUG=False
+      - SECRET_KEY=production-stock-bigdata-secret-key
+      - PORT=3000
+    volumes:
+      - ./reports:/app/reports
+      - ./data:/app/data
+    restart: unless-stopped

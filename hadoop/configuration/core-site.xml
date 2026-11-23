@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  core-site.xml — Stock Market Big Data Project
+  Pseudo-distributed Hadoop on WSL2 Ubuntu
+-->
+<configuration>
+
+    <!-- ===== Default FileSystem ===== -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+        <description>The URI of the default filesystem (NameNode).</description>
+    </property>
+
+    <!-- ===== Temporary Directory ===== -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/home/${user.name}/hadoop_data/tmp</value>
+        <description>
+            Base directory for temporary data. All other temp directories
+            are derived from this unless explicitly overridden.
+        </description>
+    </property>
+
+    <!-- ===== I/O Settings ===== -->
+    <property>
+        <name>io.file.buffer.size</name>
+        <value>131072</value>
+        <description>Read/write buffer size (128 KB) for SequenceFiles and other I/O.</description>
+    </property>
+
+    <!-- ===== Proxy User (for tools like Hue/Oozie) ===== -->
+    <property>
+        <name>hadoop.proxyuser.${user.name}.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.${user.name}.groups</name>
+        <value>*</value>
+    </property>
+
+    <!-- ===== Security — disable in dev ===== -->
+    <property>
+        <name>hadoop.security.authentication</name>
+        <value>simple</value>
+    </property>
+
+    <!-- ===== Trash ===== -->
+    <property>
+        <name>fs.trash.interval</name>
+        <value>1440</value>
+        <description>Minutes before a checkpoint is deleted (24 h).</description>
+    </property>
+
+</configuration>

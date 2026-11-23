@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Market Big Data Analytics & Trend Platform | Hadoop HDFS</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js & Plotly.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  
+  <!-- Custom Apple-Inspired Dashboard CSS -->
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <div class="logo-text">
+          <h1>StockBigData</h1>
+          <span>Hadoop HDFS Engine</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-link active" data-section="overview">
+          <i class="fa-solid fa-gauge-high"></i>
+          <span>Overview</span>
+        </a>
+        <a class="nav-link" data-section="stock-analysis">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span>Stock Analysis</span>
+        </a>
+        <a class="nav-link" data-section="trend-analysis">
+          <i class="fa-solid fa-wave-square"></i>
+          <span>Trend & Indicators</span>
+        </a>
+        <a class="nav-link" data-section="bigdata-processing">
+          <i class="fa-solid fa-server"></i>
+          <span>Big Data & Hadoop</span>
+        </a>
+        <a class="nav-link" data-section="reports">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>Reports & Exports</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="themeToggleBtn" class="theme-switch-btn">
+          <span id="themeLabel"><i class="fa-regular fa-moon"></i> Dark Theme</span>
+          <i class="fa-solid fa-circle-half-stroke"></i>
+        </button>
+        <div class="system-status-indicator">
+          <div class="status-dot"></div>
+          <span id="clusterStatusText">Hadoop Engine Ready</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <!-- ================================================================ -->
+      <!-- SECTION A: OVERVIEW -->
+      <!-- ================================================================ -->
+      <section id="overview" class="content-section active">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Market Portfolio Overview</h2>
+            <p>High-level portfolio performance, volume metrics, and cluster health overview.</p>
+          </div>
+          <div>
+            <button class="btn btn-secondary" onclick="loadOverviewData()">
+              <i class="fa-solid fa-rotate-right"></i> Refresh Data
+            </button>
+          </div>
+        </div>
+
+        <!-- 6 Primary Stat Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title">Stocks Tracked</span>
+              <div class="stat-icon icon-blue"><i class="fa-solid fa-building-columns"></i></div>
+            </div>
+            <div class="stat-value" id="statTotalStocks">15</div>
+            <div class="stat-subtext">NSE NIFTY 50 Blue-Chip Equities</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title">Records Processed</span>
+              <div class="stat-icon icon-green"><i class="fa-solid fa-database"></i></div>
+            </div>
+            <div class="stat-value" id="statTotalRecords">19,575</div>
+            <div class="stat-subtext" id="statDateRange">2020-01-01 to 2024-12-31</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title">Avg Market Price</span>
+              <div class="stat-icon icon-yellow"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            </div>
+            <div class="stat-value" id="statAvgPrice">₹2,341.50</div>
+            <div class="stat-subtext">Mean across all observations</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title">Top Performing Equity</span>
+              <div class="stat-icon icon-green"><i class="fa-solid fa-trophy"></i></div>
+            </div>
+            <div class="stat-value" id="statTopPerformer">RELIANCE</div>
+            <div class="stat-subtext" id="statTopReturn" style="color: var(--success); font-weight: 600;">+112.4% Return</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title">Lowest Performing</span>
+              <div class="stat-icon icon-red"><i class="fa-solid fa-arrow-down"></i></div>
+            </div>
+            <div class="stat-value" id="statWorstPerformer">WIPRO</div>
+            <div class="stat-subtext" id="statWorstReturn" style="color: var(--danger); font-weight: 600;">-14.8% Return</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title">Total Traded Volume</span>
+              <div class="stat-icon icon-blue"><i class="fa-solid fa-chart-simple"></i></div>
+            </div>
+            <div class="stat-value" id="statTotalVolume">48.2B</div>
+            <div class="stat-subtext">Cumulative shares traded</div>
+          </div>
+        </div>
+
+        <!-- Macro Charts Grid -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 28px;">
+          <div class="panel" style="margin-bottom: 0;">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-chart-column"></i> Equity Valuations & Price Distribution</div>
+            </div>
+            <div class="chart-container" style="min-height: 320px;">
+              <canvas id="overviewValuationChart"></canvas>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom: 0;">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-chart-pie"></i> Trading Volume Share</div>
+            </div>
+            <div class="chart-container" style="min-height: 320px;">
+              <canvas id="overviewVolumePieChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top and Bottom Performers Table -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-ranking-star"></i> Performance Ranking Leaderboard (MapReduce Job 6)</div>
+          </div>
+          <div class="table-responsive">
+            <table class="custom-table" id="performersTable">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Stock Symbol</th>
+                  <th>Company Name</th>
+                  <th>Initial Close</th>
+                  <th>Latest Close</th>
+                  <th>Total Return (%)</th>
+                  <th>Annualized Volatility</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="performersTableBody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- SECTION B: STOCK ANALYSIS -->
+      <!-- ================================================================ -->
+      <section id="stock-analysis" class="content-section">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Detailed Stock Price Analysis</h2>
+            <p>Interactive candlestick and line charting, historical price queries, and multi-equity comparison.</p>
+          </div>
+          <div class="panel-controls">
+            <select id="stockSelector" class="form-select" style="min-width: 220px;" onchange="onStockSelected()">
+              <!-- Dynamically populated -->
+            </select>
+            <button class="btn btn-primary" onclick="exportSelectedStock()">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Summary Metrics for Selected Stock -->
+        <div class="stats-grid" id="stockSummaryCards">
+          <div class="stat-card">
+            <div class="stat-card-title">Latest Close Price</div>
+            <div class="stat-value" id="selLatestClose">--</div>
+            <div class="stat-subtext" id="selSymbolName">--</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">5-Year High</div>
+            <div class="stat-value" id="selHighPrice">--</div>
+            <div class="stat-subtext">Peak trading session</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">5-Year Low</div>
+            <div class="stat-value" id="selLowPrice">--</div>
+            <div class="stat-subtext">Trough trading session</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">Net Capital Gain</div>
+            <div class="stat-value" id="selReturnPct">--</div>
+            <div class="stat-subtext" id="selTradingDays">-- trading sessions</div>
+          </div>
+        </div>
+
+        <!-- Historical Time Series Chart (Plotly Candlestick / Line) -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-chart-candlestick"></i> Historical Price Movement</div>
+            <div class="panel-controls">
+              <button class="btn btn-secondary" onclick="toggleChartType('candlestick')">Candlestick</button>
+              <button class="btn btn-secondary" onclick="toggleChartType('line')">Line</button>
+            </div>
+          </div>
+          <div id="stockPricePlot" class="chart-container" style="min-height: 440px;"></div>
+        </div>
+
+        <!-- Multi-Stock Comparison Engine -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-code-compare"></i> Multi-Equity Performance Comparison</div>
+            <div class="panel-controls">
+              <span style="font-size: 13px; color: var(--text-secondary);">Select Peers:</span>
+              <label><input type="checkbox" class="compare-chk" value="RELIANCE" checked onchange="updateComparison()"> RELIANCE</label>
+              <label><input type="checkbox" class="compare-chk" value="TCS" checked onchange="updateComparison()"> TCS</label>
+              <label><input type="checkbox" class="compare-chk" value="INFY" checked onchange="updateComparison()"> INFY</label>
+              <label><input type="checkbox" class="compare-chk" value="HDFCBANK" onchange="updateComparison()"> HDFCBANK</label>
+              <label><input type="checkbox" class="compare-chk" value="BAJFINANCE" onchange="updateComparison()"> BAJFINANCE</label>
+            </div>
+          </div>
+          <div id="comparisonPlot" class="chart-container" style="min-height: 380px;"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- SECTION C: TREND ANALYSIS & TECHNICAL INDICATORS -->
+      <!-- ================================================================ -->
+      <section id="trend-analysis" class="content-section">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Technical Trend & Quantitative Indicators</h2>
+            <p>Moving averages (SMA, EMA), Relative Strength Index (RSI), MACD, and Bollinger Bands.</p>
+          </div>
+          <div class="panel-controls">
+            <select id="trendStockSelector" class="form-select" onchange="loadTrendIndicators()">
+              <!-- Options populated dynamically -->
+            </select>
+            <div id="trendBadgeContainer">
+              <span class="badge badge-bullish" id="trendStateBadge">Bullish Trend</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Moving Average Overlay Plot -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-lines-leaning"></i> Moving Average Convergence (SMA-20, SMA-50, EMA-20)</div>
+          </div>
+          <div id="maPlot" class="chart-container" style="min-height: 380px;"></div>
+        </div>
+
+        <!-- RSI & MACD Dual Plot -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <!-- RSI (14) -->
+          <div class="panel" style="margin-bottom: 0;">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-gauge"></i> Relative Strength Index (RSI-14)</div>
+              <span id="rsiValueBadge" class="badge badge-neutral">RSI: 54.2</span>
+            </div>
+            <div id="rsiPlot" class="chart-container" style="min-height: 280px;"></div>
+          </div>
+
+          <!-- MACD -->
+          <div class="panel" style="margin-bottom: 0;">
+            <div class="panel-header">
+              <div class="panel-title"><i class="fa-solid fa-signal"></i> MACD (12, 26, 9) & Histogram</div>
+            </div>
+            <div id="macdPlot" class="chart-container" style="min-height: 280px;"></div>
+          </div>
+        </div>
+
+        <!-- Bollinger Bands Panel -->
+        <div class="panel" style="margin-top: 24px;">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-arrows-split-up-and-left"></i> Bollinger Bands (20-Period, 2σ Standard Deviations)</div>
+          </div>
+          <div id="bollingerPlot" class="chart-container" style="min-height: 340px;"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- SECTION D: BIG DATA & HADOOP HDFS PROCESSING -->
+      <!-- ================================================================ -->
+      <section id="bigdata-processing" class="content-section">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Hadoop Distributed Processing & HDFS Storage</h2>
+            <p>HDFS block distribution, cluster telemetry, and MapReduce execution status across all 7 jobs.</p>
+          </div>
+          <div class="panel-controls">
+            <button class="btn btn-primary" onclick="triggerMapReducePipeline()">
+              <i class="fa-solid fa-play"></i> Run MapReduce Suite
+            </button>
+            <button class="btn btn-secondary" onclick="loadBigDataMetrics()">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh Telemetry
+            </button>
+          </div>
+        </div>
+
+        <!-- Telemetry Notice Banner -->
+        <div class="notice-banner" id="hdfsNoticeBanner">
+          <i class="fa-solid fa-circle-info"></i>
+          <div>
+            <strong>Hadoop Cluster Status:</strong>
+            <span id="hdfsNoticeText">Connected to Hadoop HDFS & YARN execution cluster. Metrics are sourced directly from Hadoop daemons.</span>
+          </div>
+        </div>
+
+        <!-- HDFS Storage Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-title">HDFS Storage Mode</div>
+            <div class="stat-value" style="font-size: 20px;" id="hdfsMode">Pseudo-Distributed</div>
+            <div class="stat-subtext">HDFS URI: hdfs://localhost:9000</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">Total Cluster Capacity</div>
+            <div class="stat-value" id="hdfsCapacity">500.0 GB</div>
+            <div class="stat-subtext">Standard DFS allocation</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">Dataset Size in HDFS</div>
+            <div class="stat-value" id="hdfsUsedSize">2.42 MB</div>
+            <div class="stat-subtext">19,575 cleaned records</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">HDFS Block Size</div>
+            <div class="stat-value">128 MB</div>
+            <div class="stat-subtext">Replication Factor: 1</div>
+          </div>
+        </div>
+
+        <!-- MapReduce 7 Jobs Status Table -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-network-wired"></i> Hadoop MapReduce Analytics Jobs (Hadoop Streaming)</div>
+          </div>
+          <div class="table-responsive">
+            <table class="custom-table" id="mrJobsTable">
+              <thead>
+                <tr>
+                  <th>Job ID</th>
+                  <th>Job Title & Objective</th>
+                  <th>Mapper Phase</th>
+                  <th>Reducer Phase</th>
+                  <th>Output Records</th>
+                  <th>Execution Duration</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="mrJobsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Live Job Execution Terminal / Output Inspector -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-terminal"></i> MapReduce Job Output Inspector (Real HDFS Part-00000 Data)</div>
+            <div class="panel-controls">
+              <select id="mrOutputJobSelect" class="form-select" onchange="inspectMapReduceOutput()">
+                <option value="average_price">Job 1: Average Stock Price</option>
+                <option value="max_min_price">Job 2: Max & Min Price</option>
+                <option value="trading_volume">Job 3: Trading Volume Analysis</option>
+                <option value="daily_movement">Job 4: Daily Stock Movement</option>
+                <option value="monthly_trends">Job 5: Monthly Trend Analysis</option>
+                <option value="stock_ranking">Job 6: Stock Performance Ranking</option>
+                <option value="volatility">Job 7: Volatility & Risk Analysis</option>
+              </select>
+            </div>
+          </div>
+          <pre id="mrOutputTerminal" style="background-color: var(--bg-surface); padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-family: 'SF Mono', Monaco, monospace; font-size: 13px; max-height: 280px; overflow-y: auto; color: var(--text-primary);">
+Select a MapReduce job to view its partition output...
+          </pre>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- SECTION E: REPORTS & EXPORTS -->
+      <!-- ================================================================ -->
+      <section id="reports" class="content-section">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Analytical Reports & Data Downloads</h2>
+            <p>Generate industry-standard academic PDF reports, export cleaned CSV datasets, and download MapReduce logs.</p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 28px;">
+          <!-- PDF Report Card -->
+          <div class="panel" style="text-align: center; padding: 32px 24px;">
+            <div style="font-size: 42px; color: var(--danger); margin-bottom: 16px;">
+              <i class="fa-solid fa-file-pdf"></i>
+            </div>
+            <h3 style="font-size: 18px; margin-bottom: 8px;">Executive PDF Report</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+              Comprehensive multi-page publication report with portfolio summaries, performance tables, and Big Data methodologies.
+            </p>
+            <a href="/api/reports/download/pdf" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              <i class="fa-solid fa-download"></i> Download PDF Report
+            </a>
+          </div>
+
+          <!-- CSV Analytical Report Card -->
+          <div class="panel" style="text-align: center; padding: 32px 24px;">
+            <div style="font-size: 42px; color: var(--success); margin-bottom: 16px;">
+              <i class="fa-solid fa-file-csv"></i>
+            </div>
+            <h3 style="font-size: 18px; margin-bottom: 8px;">Full Analytical CSV</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+              All 15 equities aggregated metrics: start/end prices, net returns, high/low records, and annualized volatility.
+            </p>
+            <a href="/api/reports/download/csv" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              <i class="fa-solid fa-download"></i> Download Analytics CSV
+            </a>
+          </div>
+
+          <!-- Stock Comparison Export -->
+          <div class="panel" style="text-align: center; padding: 32px 24px;">
+            <div style="font-size: 42px; color: var(--primary); margin-bottom: 16px;">
+              <i class="fa-solid fa-table-columns"></i>
+            </div>
+            <h3 style="font-size: 18px; margin-bottom: 8px;">Stock Comparison Export</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+              Tabular comparison format suitable for import into Excel, Tableau, or PowerBI dashboards.
+            </p>
+            <a href="/api/reports/download/comparison" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              <i class="fa-solid fa-download"></i> Download Comparison CSV
+            </a>
+          </div>
+        </div>
+
+        <!-- Academic Report Documentation Notice -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-book-bookmark"></i> Academic Project Documentation</div>
+          </div>
+          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+            A full 23-section academic project report conforms to university standards. It covers the abstract, system architecture,
+            UML sequence diagrams, data flow diagrams (DFD Level 0, 1, 2), mathematical formulas for volatility and indicators,
+            detailed Hadoop installation on WSL2, and experimental validation results.
+          </p>
+          <div style="margin-top: 16px;">
+            <span style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Document Path:</span>
+            <code style="background-color: var(--bg-subtle); padding: 4px 8px; border-radius: var(--radius-sm); font-size: 12px; margin-left: 8px;">documentation/ACADEMIC_REPORT.md</code>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Dashboard Controller Script -->
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
