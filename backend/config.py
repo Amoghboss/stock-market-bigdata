@@ -15,7 +15,8 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "stock-market-bigdata-secret-key-change-in-prod")
 
     # --- Database ---
-    DATABASE_DIR = os.path.join(PROJECT_ROOT, "data")
+    IS_VERCEL = os.environ.get("VERCEL") == "1"
+    DATABASE_DIR = "/tmp" if IS_VERCEL else os.path.join(PROJECT_ROOT, "data")
     DATABASE_PATH = os.path.join(DATABASE_DIR, "analytics.db")
 
     # --- Data directories ---
@@ -24,7 +25,7 @@ class Config:
     PROCESSED_DATA_DIR = os.path.join(PROJECT_ROOT, "datasets", "cleaned")
     REPORTS_DIR = os.path.join(PROJECT_ROOT, "reports")
     MAPREDUCE_OUTPUT_DIR = os.path.join(PROJECT_ROOT, "reports", "mapreduce_outputs")
-    EXPORTS_DIR = os.path.join(PROJECT_ROOT, "reports", "exports")
+    EXPORTS_DIR = "/tmp/exports" if IS_VERCEL else os.path.join(PROJECT_ROOT, "reports", "exports")
 
     # --- HDFS (optional – used when a real Hadoop cluster is available) ---
     HDFS_NAMENODE = os.environ.get("HDFS_NAMENODE", "http://localhost:9870")

@@ -90,6 +90,10 @@ def serve_js(filename):
 def serve_assets(filename):
     return send_from_directory(str(PROJECT_ROOT / "frontend" / "assets"), filename)
 
+@app.route("/frontend/<path:filename>")
+def serve_frontend_static(filename):
+    return send_from_directory(str(PROJECT_ROOT / "frontend"), filename)
+
 # ---------------------------------------------------------------------------
 # Overview & Market Statistics Endpoints
 # ---------------------------------------------------------------------------
